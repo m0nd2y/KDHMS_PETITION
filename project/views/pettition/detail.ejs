@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../header"); %>
+  <body>
+    <%- include("../menu"); %>
+    <!-- Material input -->
+    <div class="md-form">
+      <input
+        type="text"
+        id="title"
+        class="form-control"
+        value="<%= result.title %>"
+        readonly
+      />
+    </div>
+    <div class="md-form">
+      <input
+        type="text"
+        id="doby"
+        class="form-control"
+        value="<%= result.doby %>"
+        readonly
+      />
+    </div>
+    <div class="md-form">
+      <input
+        type="text"
+        id="name"
+        class="form-control"
+        value="<%= result.name %>"
+        readonly
+      />
+    </div>
+    <button onclick="location.href='/api/pettition'" class="btn btn-primary">
+      목록
+    </button>
+    <button
+      onclick="location.href='/api/pettition/<%= result._id%>/edit'"
+      class="btn btn-secondary"
+    >
+      수정
+    </button>
+    <button class="btn btn-danger" id="deleteBtn">삭제</button>
+    <%- include("../footer"); %>
+    <script>
+      $(function () {
+        $("#deleteBtn").on("click", () => {
+          const result = confirm("삭제하시겠습니까?");
+          if (result) {
+            // 삭제
+            $.ajax({
+              type: "DELETE",
+              url: "/api/pettition/<%= result._id %>",
+            })
+              .done(() => {
+                location.href = "/api/pettition";
+              })
+              .fail((req, sta, err) => {
+                alert(req.responseText);
+              });
+          } else {
+            console.log("삭제 취소");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

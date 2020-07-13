@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../header"); %>
+  <body>
+    <%- include("../menu"); %>
+    <center><button type="button" class="btn btn-success" onclick="location.href='/api/pettition/new'"> 등록 </button></center>
+    <!-- 목록조회 -->
+    <div class="row row-cols-1 row-cols-md-2" style="margin: 1rem 1rem">
+    <% result.forEach(pettition => { %>
+      <div class="col mb-3">
+        <!-- Card -->
+        <div class="card">
+          <!--Card image-->
+          <div class="view overlay">
+            </a>
+          </div>
+
+          <!--Card content-->
+          <div class="card-body">
+            <!--Title-->
+            <h4 class="card-title"><center><%= pettition.title %></center></h4>
+            <!--Text-->
+            <p class="card-text">
+              <center><%= pettition.doby %></center><br><center>(<%= pettition.name %>)</center>
+            </p>
+            <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+            <center><button type="button" class="btn btn-light-blue btn-md" onclick= "location.href='/api/pettition/<%= pettition._id%>'">
+              더보기
+            </button></center>
+          </div>
+        </div>
+        <!-- Card -->
+      </div>
+    <% }); %>
+    </div> 
+    <%- include("../footer"); %>
+  </body>
+</html>

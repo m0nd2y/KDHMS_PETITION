@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../header"); %>
+  <body>
+    <%- include("../menu"); %>
+    <form id="updateForm">
+
+      <br><br>
+      <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-sm">제목</span>
+        </div>
+        <input type="text" id="title" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="<%= result.title %>" required>
+      </div>
+      
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">본문</span>
+        </div>
+        <input type="text" id="doby" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="<%= result.doby %>" required >
+      </div>
+      
+      <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-sm">글쓴이</span>
+        </div>
+        <input type="text" id="name" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="<%= result.name %>" required>
+      </div>
+      <br>
+
+      <button class="btn btn-primary">
+        저장
+      </button>
+      <img
+          src="https://www.miko.ai/blog/wp-content/uploads/2019/01/Update-300x158.jpg"
+          style="display: block; margin: 0 auto;"
+        />
+    </form>
+    <%- include("../footer"); %>
+
+    <script>
+      $(function () {
+        $("#updateForm").submit((event) => {
+          event.preventDefault();
+          // 수정
+          const title = $("#title").val();
+          const doby = $("#doby").val();
+          const name = $("#name").val();
+
+          $.ajax({
+            type: "PUT",
+            url: "/api/pettition/<%= result._id %>",
+            dataType: "json",
+            data: { title, doby, name },
+          })
+            .done(() => {
+              location.href = "/api/pettition/<%= result._id %>";
+            })
+            .fail((req, sta, err) => {
+              alert(req.responseText);
+            });
+        });
+      });
+    </script>
+  </body>
+</html>
